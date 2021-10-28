@@ -1,0 +1,22 @@
+---
+- name: install tomcat server
+  hosts: 172.0.30.103
+  become: true
+
+  tasks:
+  - name: install openjdk
+    yum: name=java-openjdk state=latest
+
+  - name: download tomcat server packages
+    get_url:
+      url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.66/bin/apache-tomcat-8.5.66.tar.gz
+      dest: /usr/local
+
+  - name: extract tomcat packages
+    unarchive:
+      src: /usr/local/apache-tomcat-8.5.66.tar.gz
+      dest: /usr/local
+      remote_src: yes
+
+  - name: start tomcat services
+    shell: nohup /usr/local/apache-tomcat-8.5.66/bin/startup.sh

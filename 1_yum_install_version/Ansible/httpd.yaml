@@ -1,0 +1,13 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+  - name: Installing Latest version of Apache
+    yum: pkg=httpd state=latest
+  - name: (Enable it on System Boot)
+    service: name=httpd enabled=yes
+    notify:
+      - start apache
+  handlers:
+    - name: start apache
+      service: name=httpd state=started
