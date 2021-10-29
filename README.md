@@ -5,8 +5,6 @@
 - 권영인 gds9210@gmail.com
 - 김연수 james6852311@gmail.com
 
-
-
 ### < 소통 >
 Google Chat  
 
@@ -43,3 +41,14 @@ Github repository
 ex. apache  
 설치 주소 : /usr/local/src/apache  
 압축 파일 디렉토리 : /usr/local/setup/apache-2.4.46.tar.gz  
+
+---------
+# 일일 진행 상황
+- 2021-10-28  
+    - 프로젝트 컨셉 회의 - 자동화 스크립트 언어 결정 및 업무 분담
+    - WBS 초안 작성
+- 2021-10-29
+    - 테스트 환경 구성 회의
+    - 명세서 초안 작성
+    - 구성도 초안 작성
+    - 테스트 환경 구축
