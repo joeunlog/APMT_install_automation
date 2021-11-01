@@ -1,0 +1,61 @@
+---
+- name: install mysql server
+  hosts: 172.0.30.103
+  become: true
+
+  tasks:
+  - name: install tools
+    shell: "yum install cmake ncurses ncurses-devel \ ncurses-libs ncurses-static openssl \ openssl-devel bison readline \ gcc gcc-c++ make cmake glibc \ automake numactl numactl-devel \ libaio libaio-devel perl perl-Data-Dumper"
+
+  - name: download boost_1_59_0
+    get_url:
+      url: http://downloads.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz
+      dest: /usr/local/src
+
+  - name: extract boost_1_59_0 packages
+    unarchive:
+      src: /usr/local/src/boost_1_59_0.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: download mysql
+    get_url:
+      url: https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.31.tar.gz
+      dest: /usr/local/src
+
+  - name: extract mysql
+    unarchive:
+      src: /usr/local/src/mysql-5.7.31.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: start cmake
+    shell: cmake \
+'-DCMAKE_INSTALL_PREFIX=/usr/local/mysql' \
+'-DINSTALL_SBINDIR=/usr/local/mysql/bin' \
+'-DINSTALL_BINDIR=/usr/local/mysql/bin' \
+'-DMYSQL_DATADIR=/usr/local/mysql/data' \
+'-DINSTALL_SCRIPTDIR=/usr/local/mysql/bin' \
+'-DWITH_INNOBASE_STORAGE_ENGINE=1' \
+'-DWITH_PARTITION_STORAGE_ENGINE=1' \
+'-DSYSCONFDIR=/usr/local/mysql/etc' \
+'-DDEFAULT_CHARSET=utf8mb4' \
+'-DDEFAULT_COLLATION=utf8mb4_general_ci' \
+'-DWITH_EXTRA_CHARSETS=all' \
+'-DWITH_SSL=bundled' \
+'-DWITH_SSL_PATH=/usr/include/openssl' \
+'-DENABLED_LOCAL_INFILE=1' \
+'-DMYSQL_TCP_PORT=3306' \
+'-DMYSQL_UNIX_ADDR=/tmp/mysql.sock' \
+'-DCURSES_LIBRARY=/usr/lib64/libncurses.so' \
+'-DCURSES_INCLUDE_PATH=/usr/include' \
+'-DDOWNLOAD_BOOST=1' \
+'-DWITH_BOOST=/usr/local/src/boost_1_59_0' \
+'-DWITH_ARCHIVE_STORAGE_ENGINE=1' \
+'-DWITH_BLACKHOLE_STORAGE_ENGINE=1' \
+'-DWITH_PERFSCHEMA_STORAGE_ENGINE=1' \
+'-DWITH_FEDERATED_STORAGE_ENGINE=1'
+
+  tasks:
+  - name: start make
+    shell: make && make install

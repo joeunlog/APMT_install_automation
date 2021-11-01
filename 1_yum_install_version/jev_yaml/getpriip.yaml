@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Gather EC2 remote facts
+      ec2_instance_info:
+        filters:
+          availability-zone: ap-southeast-1c
+      register: result

@@ -53,5 +53,5 @@ ex. apache
     - 구성도 초안 작성
     - 테스트 환경 구축
 - 2021-11-01
-    - Ansible yaml 파일 작성
-    - test
+    - ec2 생성용 Ansible yaml 파일 작성 (keypair 적용)
+    - ec2 info 확인용 ansible yaml 파일 작성
