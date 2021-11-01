@@ -54,3 +54,4 @@ ex. apache
     - 테스트 환경 구축
 - 2021-11-01
     - Ansible yaml 파일 작성
+    - test
