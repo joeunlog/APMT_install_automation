@@ -1,0 +1,15 @@
+---
+- hosts: cent
+  remote_user: centos
+  become: yes
+  
+  tasks:
+  - name: Installing Latest version of Apache
+    yum: pkg=httpd state=latest
+  - name: (Enable it on System Boot)
+    service: name=httpd enabled=yes
+    notify:
+      - start apache
+  handlers:
+    - name: start apache
+      service: name=httpd state=started

@@ -1,0 +1,39 @@
+---
+  - name: "Local Test"
+    hosts: localhost
+    connection: local
+    become: yes
+
+    tasks:
+    - name: install pip
+      yum:
+        name:
+          - python-pip
+          - python3-pip
+        state: present
+      register: pip_result
+    - debug: var=pip_result
+    - name: install boto
+      pip:
+        name:
+          - boto
+          - boto3
+      register: boto_result
+    - debug: var=boto_result
+    - name: create an ec2
+      ec2:
+        region: ap-southeast-1
+        key_name: keypair-gyi-prd
+        group_id: sg-0e2b3158e17121be2
+        instance_type: t2.micro
+        image: ami-07f65177cb990d65b
+        wait: yes
+        wait_timeout: 60
+        instance_tags:
+            Name: ec2-from-ansible-test1
+            Creater: Ansible
+        vpc_subnet_id: subnet-077dd8ef32708d013
+        assign_public_ip: False
+      register: aws_result
+    - debug:
+        var: aws_result
