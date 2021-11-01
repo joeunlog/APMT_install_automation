@@ -1,6 +1,7 @@
 ---
 - name: install tomcat server
   hosts: cent
+  remote_user: centos
   become: true
 
   tasks:

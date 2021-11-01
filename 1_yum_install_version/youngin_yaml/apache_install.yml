@@ -2,6 +2,7 @@
 - hosts: cent
   remote_user: centos
   become: yes
+  
   tasks:
   - name: Installing Latest version of Apache
     yum: pkg=httpd state=latest
