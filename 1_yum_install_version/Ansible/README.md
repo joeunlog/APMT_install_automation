@@ -1,7 +1,9 @@
 # APMT install automation
 ## yum install version - ansible
 
-VPC, Subnet, SG 등을 미리 구축한 뒤 EC2는 ansible 이용하여 따로 구축
+- VPC, Subnet, SG 등을 미리 구축한 뒤 각 서버용 EC2 instance는 ansible 이용하여 따로 구축
+- bastion server는 콘솔에서 생성, 아래 작업은 모두 bastion 서버에서 진행
+- bastion server에 이 디렉토리의 파일과 각 서버 접속용 keypair가 있어야 함
 <br>
 <br>
 <br>

@@ -45,14 +45,16 @@ ex. apache
 ---------
 # 일일 진행 상황
 - 2021-10-28  
-    - 프로젝트 컨셉 회의 - 자동화 스크립트 언어 결정 및 업무 분담
-    - WBS 초안 작성
+  - 프로젝트 컨셉 회의 - 자동화 스크립트 언어 결정 및 업무 분담
+  - WBS 초안 작성
 - 2021-10-29
-    - 테스트 환경 구성 회의
-    - 명세서 초안 작성
-    - 구성도 초안 작성
-    - 테스트 환경 구축
+  - 테스트 환경 구성 회의
+  - 명세서 초안 작성
+  - 구성도 초안 작성
+  - 테스트 환경 구축
 - 2021-11-01
-    - ec2 생성용 Ansible yaml 파일 작성 (keypair 적용)
-    - ec2 info 확인용 ansible yaml 파일 작성
+  - ec2 생성용 Ansible yaml 파일 작성 (keypair 적용)
+  - ec2 info 확인용 ansible yaml 파일 작성
 - 2021-11-02
+  - architecture에 따른 각 서버용 instance 생성 ansible 작성 완료
+  - instance 생성, apache 설치, tomcat 설치까지 테스트 완료
