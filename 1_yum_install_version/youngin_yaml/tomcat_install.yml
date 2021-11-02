@@ -1,8 +1,9 @@
 ---
 - name: install tomcat server
   hosts: cent
+  gather_facts: no
   remote_user: centos
-  become: true
+  become: yes
 
   tasks:
   - name: install openjdk
