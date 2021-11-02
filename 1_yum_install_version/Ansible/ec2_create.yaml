@@ -1,0 +1,93 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    region: ap-southeast-1
+    key: keypair-auto-dev-pri
+    instance_type: t2.micro
+    instance_type_db: t3.small
+    image: ami-07f65177cb990d65b
+    web_group: sg_auto_dev_ase1_pri_web
+    was_group: sg_auto_dev_ase1_pri_was
+    db_group: sg_auto_dev_ase1_pri_db
+  tasks:
+    - name: web01 server provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: yes
+        group: "{{ web_group }}"
+        vpc_subnet_id: "subnet-07513a160e196ab2c"
+        private_ip: "10.50.20.15"
+        instance_tags:
+          Name: ec2-auto-dev-ase1-pri-web01
+          Creater: Ansible
+        termination_protection: yes
+        volumes:
+          - volume_size: 30
+            device_name: "/dev/sda1"
+            volume_type: "gp2"
+      register: ec2
+    - name: web02 server provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: yes
+        group: "{{ web_group }}"
+        vpc_subnet_id: "subnet-04aa748ecbd274282"
+        private_ip: "10.50.20.150"
+        instance_tags:
+          Name: ec2-auto-dev-ase1-pri-web02
+          Creater: Ansible    
+        termination_protection: yes   
+      register: ec2
+    - name: was01 server provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: yes
+        group: "{{ was_group }}"
+        vpc_subnet_id: "subnet-0314d1050e78e756d"
+        private_ip: "10.50.30.15"
+        instance_tags:
+          Name: ec2-auto-dev-ase1-pri-was01
+          Creater: Ansible    
+        termination_protection: yes        
+      register: ec2      
+    - name: was02 server provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: yes
+        group: "{{ was_group }}"
+        vpc_subnet_id: "subnet-02c882929c6af35da"
+        private_ip: "10.50.30.150"
+        instance_tags:
+          Name: ec2-auto-dev-ase1-pri-was02
+          Creater: Ansible    
+        termination_protection: yes        
+      register: ec2            
+    - name: db server provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key }}"
+        instance_type: "{{ instance_type_db }}"
+        image: "{{ image }}"
+        wait: yes
+        group: "{{ db_group }}"
+        vpc_subnet_id: "subnet-06bfe2354cfd206a1"
+        private_ip: "10.50.100.15"
+        instance_tags:
+          Name: ec2-auto-dev-ase1-pri-db
+          Creater: Ansible    
+        termination_protection: yes        
+      register: ec2        
