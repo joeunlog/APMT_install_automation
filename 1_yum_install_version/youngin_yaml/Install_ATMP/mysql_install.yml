@@ -1,6 +1,6 @@
 ---
 - name: install mysql server
-  hosts: db01
+  hosts: db
   remote_user: centos
   become: yes
 

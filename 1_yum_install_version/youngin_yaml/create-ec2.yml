@@ -1,6 +1,7 @@
 ---
-  - name: "Local Test"
+  - name: "Create EC2 instance"
     hosts: localhost
+    gather_facts: no
     connection: local
     become: yes
 

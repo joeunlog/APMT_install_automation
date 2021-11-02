@@ -1,0 +1,23 @@
+---
+  - name: "Create DB EC2 instance"
+    hosts: localhost
+    gather_facts: no
+    connection: local
+    become: yes
+    tasks:
+    - name: create an ec2
+      ec2:
+        region: ap-southeast-1
+        key_name: keypair-gyi-prd
+        group: sg_gyi_prd_as1_pri_db
+        instance_type: t3.small
+        image: ami-07f65177cb990d65b
+        wait: yes
+        wait_timeout: 60
+        instance_tags:
+            Name: ec2-gyi-prd-ase1-a-pub-db
+            Creater: Ansible
+        vpc_subnet_id: subnet-0affcf230327611c7
+        assign_public_ip: False
+        private_ip: 10.30.7.10
+      register: ec2_result
