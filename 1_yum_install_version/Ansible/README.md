@@ -51,4 +51,4 @@ ansible-playbook httpd_install.yaml -i aws_hosts
 ```sh
 ansible-playbook tomcat_install.yaml -i aws_hosts
 ```
-> curl test : `curl 10.50.20.15:8080`, `curl 10.50.20.150:8080`
+> curl test : `curl 10.50.30.15:8080`, `curl 10.50.30.150:8080`
