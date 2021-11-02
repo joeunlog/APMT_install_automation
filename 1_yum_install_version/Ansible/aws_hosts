@@ -1,0 +1,22 @@
+[local]
+localhost ansible_connection=local
+
+[webserver:vars]
+ansible_ssh_private_key_file=/usr/local/apmtauto/keypair-auto-dev-pri.pem
+
+[webserver]
+web01 ansible_host=10.50.20.15
+web02 ansible_host=10.50.20.150
+
+[wasserver:vars]
+ansible_ssh_private_key_file=/usr/local/apmtauto/keypair-auto-dev-pri.pem
+
+[wasserver]
+was01 ansible_host=10.50.30.15
+was02 ansible_host=10.50.30.150
+
+[dbserver:vars]
+ansible_ssh_private_key_file=/usr/local/apmtauto/keypair-auto-dev-pri.pem
+
+[dbserver]
+db ansible_host=10.50.100.15
