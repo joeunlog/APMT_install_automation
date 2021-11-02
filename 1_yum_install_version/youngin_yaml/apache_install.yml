@@ -1,8 +1,10 @@
 ---
-- hosts: cent
+- name : Install Apache on CentOS
+  hosts: cent
+  gather_facts: no
   remote_user: centos
   become: yes
-  
+
   tasks:
   - name: Installing Latest version of Apache
     yum: pkg=httpd state=latest
