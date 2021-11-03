@@ -58,3 +58,6 @@ ex. apache
 - 2021-11-02
   - architecture에 따른 각 서버용 instance 생성 ansible 작성 완료
   - instance 생성, apache 설치, tomcat 설치까지 테스트 완료
+- 2021-11-03
+  - instance 생성 후 mysql 설치용 ansible yaml 파일 작성 완료
+  - mysql 설치 및 테스트 완료
