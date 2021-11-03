@@ -52,3 +52,10 @@ ansible-playbook httpd_install.yaml -i aws_hosts
 ansible-playbook tomcat_install.yaml -i aws_hosts
 ```
 > curl test : `curl 10.50.30.15:8080`, `curl 10.50.30.150:8080`
+
+---
+# Install mysql to db server
+
+
+> instance type의 경우 t2.micro로는 정상적으로 설치되지 않고 t3.small에서는 정상 설치
+> 마찬가지로, EBS 용량 8 GiB에서는 에러가 나고 30 GiB에서는 정상 설치

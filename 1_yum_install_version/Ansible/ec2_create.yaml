@@ -5,12 +5,18 @@
   vars:
     region: ap-southeast-1
     key: keypair-auto-dev-pri
+
     instance_type: t2.micro
     instance_type_db: t3.small
+    
     image: ami-07f65177cb990d65b
+    
     web_group: sg_auto_dev_ase1_pri_web
     was_group: sg_auto_dev_ase1_pri_was
     db_group: sg_auto_dev_ase1_pri_db
+    
+    device_name: /dev/sda1
+    volume_type: gp2
   tasks:
     - name: web01 server provisioning
       ec2:
@@ -28,8 +34,8 @@
         termination_protection: yes
         volumes:
           - volume_size: 30
-            device_name: "/dev/sda1"
-            volume_type: "gp2"
+            device_name: "{{ device_name }}"
+            volume_type: "{{ volume_type }}"
       register: ec2
     - name: web02 server provisioning
       ec2:
@@ -45,6 +51,10 @@
           Name: ec2-auto-dev-ase1-pri-web02
           Creater: Ansible    
         termination_protection: yes   
+        volumes:
+          - volume_size: 30
+            device_name: "{{ device_name }}"
+            volume_type: "{{ volume_type }}"
       register: ec2
     - name: was01 server provisioning
       ec2:
@@ -59,7 +69,11 @@
         instance_tags:
           Name: ec2-auto-dev-ase1-pri-was01
           Creater: Ansible    
-        termination_protection: yes        
+        termination_protection: yes 
+        volumes:
+          - volume_size: 30
+            device_name: "{{ device_name }}"
+            volume_type: "{{ volume_type }}"
       register: ec2      
     - name: was02 server provisioning
       ec2:
@@ -74,7 +88,11 @@
         instance_tags:
           Name: ec2-auto-dev-ase1-pri-was02
           Creater: Ansible    
-        termination_protection: yes        
+        termination_protection: yes  
+        volumes:
+          - volume_size: 30
+            device_name: "{{ device_name }}"
+            volume_type: "{{ volume_type }}"
       register: ec2            
     - name: db server provisioning
       ec2:
@@ -90,4 +108,8 @@
           Name: ec2-auto-dev-ase1-pri-db
           Creater: Ansible    
         termination_protection: yes        
+        volumes:
+          - volume_size: 30
+            device_name: "{{ device_name }}"
+            volume_type: "{{ volume_type }}"
       register: ec2        
