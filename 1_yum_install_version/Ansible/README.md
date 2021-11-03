@@ -55,7 +55,10 @@ ansible-playbook tomcat_install.yaml -i aws_hosts
 
 ---
 # Install mysql to db server
-
+`mysql_install.yaml`
+```sh
+ansible-playbook mysql_install.yaml -i aws_hosts
+```
 
 > instance type의 경우 t2.micro로는 정상적으로 설치되지 않고 t3.small에서는 정상 설치
 > 마찬가지로, EBS 용량 8 GiB에서는 에러가 나고 30 GiB에서는 정상 설치

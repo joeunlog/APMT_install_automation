@@ -1,0 +1,29 @@
+---
+- name: install mysql server
+  hosts: dbserver
+  remote_user: centos
+  become: yes
+  tasks:
+  - name: install dependency package
+    shell: yum -y install cmake make gcc gcc-c++ openssl openssl-devel ncurses ncurses-base ncurses-libs ncurses-devel perl
+
+  - name: download mysql
+    get_url:
+      url: https://cdn.mysql.com/archives/mysql-5.7/mysql-5.7.31.tar.gz
+      dest: /usr/local/src
+
+  - name: extract mysql
+    unarchive:
+      src: /usr/local/src/mysql-5.7.31.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: start cmake
+    shell: cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/data -DMYSQL_UNIX_ADDR=/usr/local/mysql/mysql.sock -DMYSQL_TCP_PORT=3306 -DMYSQL_USER=mysql -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DSYSCOMFDIR=/etc -DWITH_EXTRA_CHARSETS=all -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/mysql/boost -DWITH_READLINE=1 -DENABLED_LOCAL_INFILE=1
+    args:
+      chdir: /usr/local/src/mysql-5.7.31
+
+  - name: start make
+    shell: make && make install
+    args:
+      chdir: /usr/local/src/mysql-5.7.31
