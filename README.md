@@ -18,12 +18,12 @@ Github repository
   1.3 구성도				# 권영인	~ 10/29  
 2. 파악  
   2.1 기존에 작성한 Ansible playbook 파악	# All	~ 11/3  
-3. '구축' (가제)    
+3. Ansible only version    
   3.1 EC2 key 적용				# 조은빛	~ 11/12  
   3.2 MySQL 설치 자동화			# 권영인	~ 11/12  
   3.3 php 설치 자동화			# 김연수	~ 11/12  
   3.4 manual 작성				# All	~ 11/12  
-4. Script 고도화 - 버전 선택 기능 추가  
+4. Script version
   4.1 Shell script  
     4.1.1 Apache				# 조은빛	~ 11/26  
     4.1.2 php				# 조은빛	~ 11/26  
@@ -58,3 +58,6 @@ ex. apache
 - 2021-11-02
   - architecture에 따른 각 서버용 instance 생성 ansible 작성 완료
   - instance 생성, apache 설치, tomcat 설치까지 테스트 완료
+- 2021-11-03
+  - instance 생성 후 mysql 설치용 ansible yaml 파일 작성 완료
+  - mysql 설치 및 테스트 완료

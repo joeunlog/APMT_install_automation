@@ -1,0 +1,31 @@
+---
+- name: install mysql server
+  hosts: db
+  remote_user: centos
+  become: yes
+  gather_facts: no
+
+  tasks:
+  - name: install tools
+    shell: yum -y install cmake ncurses ncurses-devel ncurses-libs ncurses-static openssl openssl-devel bison readline gcc gcc-c++ make glibc automake numactl numactl-devel libaio libaio-devel perl perl-Data-Dumper wget vim
+
+  - name: download mysql 5.7.31
+    get_url:
+      url: https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.31.tar.gz
+      dest: /usr/local/src
+
+  - name: extract mysql
+    unarchive:
+      src: /usr/local/src/mysql-5.7.31.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: start cmake
+    shell: cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/data -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_EXTRA_CHARSETS=all -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/src/boost_1_59_0 -DWITH_ARCHIVE_STORAGE_ENGINE=1 -DWITH_EXAMPLE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DENABLED_PROFILING=1 -DWITH_SSL=bundled -DWITH_SSL_PATH=/usr/include/openssl -DWITH_ZLIB=system -DMYSQL_TCP_PORT=3306 -DCURSES_LIBRARY=/usr/lib64/libncurses.so -DMYSQL_UNIX_ADDR=/tmp/mysql.sock -DENABLED_LOCAL_INFILE=1 -DMYSQL_UNIX_ADDR=/tmp/mysql.sock -DCURSES_INCLUDE_PATH=/usr/include
+    args:
+      chdir: /usr/local/src/mysql-5.7.31
+
+  - name: start make
+    shell: make && make install
+    args:
+      chdir: /usr/local/src/mysql-5.7.31

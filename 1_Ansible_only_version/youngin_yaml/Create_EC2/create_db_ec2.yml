@@ -20,4 +20,9 @@
         vpc_subnet_id: subnet-0affcf230327611c7
         assign_public_ip: False
         private_ip: 10.30.7.10
+
+        volumes:
+          - volume_size: 30
+            device_name: /dev/sda1
+            volume_type: gp2
       register: ec2_result
