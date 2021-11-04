@@ -1,2 +1,2 @@
-# APMT install automation - specific version
+# APMT install automation - Ansible only version
 
