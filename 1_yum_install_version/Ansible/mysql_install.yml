@@ -5,20 +5,8 @@
   become: yes
 
   tasks:
-  
   - name: install tools
     shell: "yum install -y cmake ncurses ncurses-devel ncurses-libs ncurses-static openssl openssl-devel bison readline gcc gcc-c++ make cmake glibc automake numactl numactl-devel libaio libaio-devel perl perl-Data-Dumper wget vim"
-
-  - name: download boost_1_59_0
-    get_url:
-      url: http://downloads.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz
-      dest: /usr/local/src
-
-  - name: extract boost_1_59_0 packages
-    unarchive:
-      src: /usr/local/src/boost_1_59_0.tar.gz
-      dest: /usr/local/src
-      remote_src: yes
 
   - name: download mysql
     get_url:

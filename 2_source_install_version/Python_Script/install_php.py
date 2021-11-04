@@ -14,8 +14,10 @@ if len(result) == 0:
 subprocess.call('ls -l', shell=True)
 subprocess.call('yum -y install libxml2-devel openssl-devel libjpeg-devel libpng-devel vim', shell=True)
 
-php_version = print(input('which version you going to install? : '))
-user_ans = print(input('Php version = ', php_version, 'correct? (yes/no)'))
+php_version=input('which version you going to install? : ')
+print('Php version = ', php_version, 'correct? (yes/no)')
+user_ans=input(':')
 if user_ans == 'yes':
-    url_php = 'https://www.php.net/distributions/php-7.3.32.tar.gz'
-    subprocess.call('wget ')
+    urlphp = 'https://www.php.net/distributions/php-'+php_version+'.tar.gz'
+    print(urlphp)
+    subprocess.call(['wget ' ,print(urlphp)], shell=True)
