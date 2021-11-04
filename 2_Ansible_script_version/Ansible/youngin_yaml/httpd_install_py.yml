@@ -1,0 +1,18 @@
+---
+- name : Install Apache on CentOS
+  hosts: web02
+  gather_facts: no
+  remote_user: centos
+  become: yes
+
+  tasks:
+  - name: Copy python script
+    copy:
+      src: httpd_install.py
+      dest: /usr/local/src
+      mode: 0700
+
+  - name: Execute python script
+    shell: python ./httpd_install.py
+    args:
+      chdir: /usr/local/src
