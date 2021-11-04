@@ -61,3 +61,7 @@ ex. apache
 - 2021-11-03
   - instance 생성 후 mysql 설치용 ansible yaml 파일 작성 완료
   - mysql 설치 및 테스트 완료
+- 2021-11-04
+  - ansible only 버전 매뉴얼 초안 작성
+  - ansible only 버전 php 설치용 ansible-playbook 작성, 테스트 완료
+  - ansible script 버전 apache 설치 python 스크립트 작성 중
