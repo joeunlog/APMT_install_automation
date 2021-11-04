@@ -1,0 +1,35 @@
+---
+- name: install mysql server
+  hosts: webservers
+  remote_user: centos
+  become: yes
+
+  tasks:
+  - name: install dependency tools
+    shell: yum -y install libxml2-devel openssl-devel libjpeg-devel libpng-devel vim
+
+  - name: download php
+    get_url:
+      url: https://www.php.net/distributions/php-7.3.32.tar.gz
+      dest: /usr/local/src
+
+  - name: extract php
+    unarchive:
+      src: /usr/local/src/php-7.3.32.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: configure php
+    shell: ./configure --prefix=/usr/local/src/php --with-apxs=/usr/local/apache/bin/apxs --with-mysql --with-mysqli --with-zlib --with-jpeg --with-png --with-openssl --with-libxml --with-iconv --with-gd --enable-curl --enable-sockets --disable-fileinfo --disable-debug
+    args:
+      chdir: /usr/local/src/php-7.3.32
+
+  - name: start make
+    shell: make
+    args:
+      chdir: /usr/local/src/php-7.3.32
+
+  - name: start make install
+    shell: make install
+    args:
+      chdir: /usr/local/src/php-7.3.32
