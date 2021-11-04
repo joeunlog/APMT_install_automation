@@ -1,0 +1,76 @@
+---
+- name: install apache server
+  hosts: webserver
+  remote_user: centos
+  become: yes
+  tasks:
+  - name: install dependency package
+    shell: yum -y install gcc gcc-c++ expat-devel wget
+
+  - name: download apache
+    get_url:
+      url: http://archive.apache.org/dist/httpd/httpd-2.4.46.tar.gz
+      dest: /usr/local/src
+
+  - name: extract apache
+    unarchive:
+      src: /usr/local/src/httpd-2.4.46.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: download apr
+    get_url:
+      url: https://archive.apache.org/dist/apr/apr-1.6.5.tar.gz
+      dest: /usr/local/src
+
+  - name: extract apr
+    unarchive:
+      src: /usr/local/src/apr-1.6.5.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: download apr-util
+    get_url:
+      url: https://archive.apache.org/dist/apr/apr-util-1.6.1.tar.gz
+      dest: /usr/local/src
+
+  - name: extract apr-util
+    unarchive:
+      src: /usr/local/src/apr-util-1.6.1.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: download pcre
+    shell: wget -P /usr/local/src https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.gz --no-check-certificate
+
+  - name: extract pcre
+    unarchive:
+      src: /usr/local/src/pcre-8.44.tar.gz
+      dest: /usr/local/src
+      remote_src: yes
+
+  - name: configure pcre
+    shell: ./configure --prefix=/usr/local/src
+    args:
+      chdir: /usr/local/src/pcre-8.44
+
+  - name: start pcre make
+    shell: make && make install
+    args:
+      chdir: /usr/local/src/pcre-8.44
+
+  - name: move apr to inside of apache
+    shell: mv /usr/local/src/apr-1.6.5 /usr/local/src/httpd-2.4.46/srclib/apr
+
+  - name: move apr-util to inside of apache
+    shell: mv /usr/local/src/apr-util-1.6.1 /usr/local/src/httpd-2.4.46/srclib/apr-util
+
+  - name: configure apache
+    shell: ./configure --prefix=/usr/local/src/apache --with-included-apr --with-pcre=/usr/local/src/bin/pcre-config
+    args:
+      chdir: /usr/local/src/httpd-2.4.46
+
+  - name: start apache make
+    shell: make && make install
+    args:
+      chdir: /usr/local/src/httpd-2.4.46
