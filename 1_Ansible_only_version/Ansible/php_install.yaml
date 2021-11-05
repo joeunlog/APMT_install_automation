@@ -1,5 +1,5 @@
 ---
-- name: install mysql server
+- name: install php server
   hosts: webservers
   remote_user: centos
   become: yes

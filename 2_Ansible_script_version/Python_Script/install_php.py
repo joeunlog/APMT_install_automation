@@ -28,8 +28,8 @@ while True:
     if user_ans != 'yes':
         print('plz type your version again')
 php_dir = 'php-{}'.format(php_version)
-subprocess.Popen(['tar {}'.format(php_dir), '-zxvf'], stdout=subprocess.PIPE )
-subprocess.Popen(['cd', php_dir.split()])
+subprocess.Popen(['tar -zxvf {}'.format(php_dir)], stdout=subprocess.PIPE )
+subprocess.Popen(['cd{}'.format(php_dir)])
 subprocess.Popen(['./configure', '--prefix=/usr/local/src/php','--with-apxs=/usr/local/apache/bin/apxs', '--with-mysql --with-mysqli', '--with-zlib', '--with-jpeg' ,'--with-png', '--with-openssl', '--with-libxml', '--with-iconv', '--with-gd', '--enable-curl', '--enable-sockets', '--disable-fileinfo', '--disable-debug' ])
 subprocess.call('make')
 subprocess.call('make install')
