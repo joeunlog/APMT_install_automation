@@ -65,3 +65,6 @@ ex. apache
   - ansible only 버전 매뉴얼 초안 작성
   - ansible only 버전 php 설치용 ansible-playbook 작성, 테스트 완료
   - ansible script 버전 apache 설치 python 스크립트 작성 중
+- 2021-11-05
+  - ansible only 버전 매뉴얼 작성
+  - ansible script 버전 apache,php 설치 python 스크립트 작성 중
