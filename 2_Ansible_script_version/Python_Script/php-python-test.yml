@@ -1,0 +1,16 @@
+---
+- name: install php via Python Script
+  hosts: webservers
+  remote_user: centos
+  become: yes
+
+  tasks:
+  - name: execute python script for install php
+    command: /usr/bin/python php_install.py
+    dest: /usr/local/src
+
+  - name: php version set
+    vars:
+      php_version: 7.3.32
+
+  
