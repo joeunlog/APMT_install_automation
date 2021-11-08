@@ -13,6 +13,6 @@
       mode: 0700
 
   - name: Execute python script
-    shell: python ./httpd_install.py
+    shell: python ./httpd_install.py "{{ APACHE_VERSION }}" "{{ APR_VERSION }}" "{{APR_UTIL_VERSION }}" "{{PCRE_VERSION }}"
     args:
       chdir: /usr/local/src

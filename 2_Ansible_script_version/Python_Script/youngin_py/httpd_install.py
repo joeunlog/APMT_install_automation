@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 import os
+import sys
 
-# input version
-apache_version = raw_input("enter apache version : ")
-apr_version = raw_input("enter apr version: ")
-apr_util_version = raw_input("enter apr_util version : ")
-pcre_version = raw_input("enter pcre version : ")
+# input version - execute ansible
+apache_version = sys.argv[1]
+apr_version = sys.argv[2]
+apr_util_version = sys.argv[3]
+pcre_version = sys.argv[4]
+
+# input versoin - execute python
+# apache_version = raw_input("enter apache version : ")
+# apr_version = raw_input("enter apr version: ")
+# apr_util_version = raw_input("enter apr_util version : ")
+# pcre_version = raw_input("enter pcre version : ")
 
 # install dependency package
 print("-----------------------------install dependency package-----------------------------")
@@ -70,10 +77,14 @@ os.system("mv /usr/local/src/apr-util-1.6.1 /usr/local/src/httpd-2.4.46/srclib/a
 
 # configure apache
 print("-----------------------------configure apache-----------------------------")
-apache_dir_path = "usr/local/src/httpd-{}".format(apache_version)
+apache_dir_path = "/usr/local/src/httpd-{}".format(apache_version)
 os.chdir(apache_dir_path)
 os.system("./configure --prefix=/usr/local/src/apache --with-included-apr --with-pcre=/usr/local/src/bin/pcre-config")
 
 # start apache make && make install
 print("-----------------------------start apache make && make install-----------------------------")
-os.system("make && make install")
+os.system("make && make install") 
+
+# start httpd services
+print("-----------------------------start httpd services-----------------------------")
+os.system("nohup /usr/local/apache/bin/apachectl")

@@ -12,13 +12,13 @@
   - name: download tomcat server packages
     get_url:
       url: https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.66/bin/apache-tomcat-8.5.66.tar.gz
-      dest: /usr/local
+      dest: /usr/local/src
 
   - name: extract tomcat packages
     unarchive:
-      src: /usr/local/apache-tomcat-8.5.66.tar.gz
+      src: /usr/local/src/apache-tomcat-8.5.66.tar.gz
       dest: /usr/local
       remote_src: yes
 
   - name: start tomcat services
-    shell: nohup /usr/local/apache-tomcat-8.5.66/bin/startup.sh
+    shell: nohup /usr/local/src/apache-tomcat-8.5.66/bin/startup.sh
