@@ -1,0 +1,14 @@
+---
+- name: install php via Python Script
+  hosts: DBserver
+  remote_user: centos
+  become: yes
+
+  tasks:
+  - name: copy pyhton script
+    copy:
+      src: /root/mysql_install.py
+      dest: /usr/local/src/mysql_install.py
+
+  - name: install php by python
+    shell: python /usr/local/src/mysql_install.py {{version}}
