@@ -1,18 +1,9 @@
-test_text = 'www.php.net/distributions/php-7.3.32.tar.gz'
+#!/usr/bin/env python
 
-if 'www' in test_text:
-    print(test_text)
-else:
-    print('cant find text')
+import subprocess #shell 명령어 사용 시 필요
+import sys #ansible에서 인자값 받아오기 위해 필요
 
-test_text.find('php-')
-test_text.find('.tar',-1)
-print(test_text[test_text.find('php-'):(test_text.find('.tar') -1)])
-print(test_text.find('.tar'))
-
-import subprocess
-import sys
-
+#ansible-playbook 실행시 url을 입력하면 실행
 if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
     user_url = sys.argv[1]
     php_dir = user_url[user_url.find('php-') : (user_url.find('.tar') -1)]
@@ -24,6 +15,7 @@ if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
     subprocess.call('make', shell=True)
     subprocess.call('make install', shell=True)
 
+#url이 아니라 버전만 입력했을 시 실행
 else:
     php_version = sys.argv[1]
     php_dir = 'php-{}'.format(php_version)
@@ -34,4 +26,4 @@ else:
     subprocess.call('tar -zxvf {}'.format(php_file), shell=True)
     subprocess.call('./{}/configure --prefix=/usr/local/src/php --with-apxs=/usr/local/apache/bin/apxs --with-mysql --with-mysqli --with-zlib --with-jpeg --with-png --with-openssl --with-libxml --with-iconv --with-gd --enable-curl --enable-sockets --disable-fileinfo --disable-debug'.format(php_dir), shell=True)
     subprocess.call('make', shell=True)
-    subprocess.call('make install', shell=True) 
+    subprocess.call('make install', shell=True)

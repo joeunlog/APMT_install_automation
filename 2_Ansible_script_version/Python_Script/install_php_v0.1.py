@@ -7,6 +7,10 @@ print('#'*30)
 import subprocess
 import sys
 php_version = sys.argv[1]
+user_url = sys.argv[1]
+if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
+    
+
 php_dir = 'php-{}'.format(php_version)
 url_php = 'https://www.php.net/distributions/php-{}.tar.gz'.format(php_version)
 php_file = 'php-{}.tar.gz'.format(php_version)
