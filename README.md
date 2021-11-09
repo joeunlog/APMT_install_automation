@@ -69,3 +69,4 @@ ex. apache
   - ansible only 버전 매뉴얼 작성
   - ansible script 버전 apache,php 설치 python 스크립트 작성 중
 - 2021-11-08
+  - apache tomcat python script, ansible-playbook 완료
