@@ -35,3 +35,5 @@ else:
     subprocess.call('./{}/configure --prefix=/usr/local/src/php --with-apxs=/usr/local/apache/bin/apxs --with-mysql --with-mysqli --with-zlib --with-jpeg --with-png --with-openssl --with-libxml --with-iconv --with-gd --enable-curl --enable-sockets --disable-fileinfo --disable-debug'.format(php_dir), shell=True)
     subprocess.call('make', shell=True)
     subprocess.call('make install', shell=True) 
+
+print('done')
