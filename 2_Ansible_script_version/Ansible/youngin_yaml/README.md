@@ -1,4 +1,4 @@
-# Ansible 실행 시 Python argv 를 넣어 실행
+# Ansible 실행 시 Python argv 를 넣어 실행하는 방법
 ## 1) HTTPD 설치
 * 예시 ->  `ansible_host` 파일에서 지정된 호스트에 각 버전을 지정하여 미들웨어를 할 수 있음
 ```
