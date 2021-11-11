@@ -37,3 +37,4 @@ else:
     subprocess.call('make install', shell=True) 
 
 print('done')
+print('lol')
