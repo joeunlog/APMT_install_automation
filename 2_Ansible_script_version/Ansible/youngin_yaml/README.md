@@ -4,7 +4,7 @@
 ```
 ansible-playbook httpd_install_py.yml -i ansible_hosts -e 'APACHE_VERSION=2.4.46 APR_VERSION=1.6.5 APR_UTIL_VERSION=1.6.1 PCRE_VERSION=8.44'
 ```
-
+---
 ## 2) TOMCAT 설치
 * 예시
 ```
