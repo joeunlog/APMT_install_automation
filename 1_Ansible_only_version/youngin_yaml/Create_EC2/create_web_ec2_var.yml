@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    region: ap-northeast-2
+    key: keypair-auto-dev-pub
+    instance_type: t2.micro
+    image: ami-06e83aceba2cb0907
+    security_group: sg_auto_dev_an2_pri_web
+    vpc_subnet_id: subnet-0e09a182b36f226bc
+    device_name: /dev/sda1
+    volume_type: gp2
+  tasks:
+    - name: web instance provisioning
+      ec2:
+        region: "{{ region }}"
+        key_name: "{{ key }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: yes
+        group: "{{ security_group }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        private_ip: "10.50.20.15"
+        instance_tags:
+          Name: ec2-auto-dev-an2-pri-web01
+          Creater: Ansible    
+        termination_protection: yes   
+        volumes:
+          - volume_size: 30
+            device_name: "{{ device_name }}"
+            volume_type: "{{ volume_type }}"
+            volume_name: volume-auto-dev-an2-web01
+      register: ec2 
+      
