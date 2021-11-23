@@ -40,7 +40,7 @@ Github repository
 ### < 설치 환경 통일 >
 ex. apache  
 설치 주소 : /usr/local/src/apache  
-압축 파일 디렉토리 : /usr/local/setup/apache-2.4.46.tar.gz  
+압축 파일 디렉토리 : /usr/local/src/apache-2.4.46.tar.gz  
 
 ---------
 # 일일 진행 상황
