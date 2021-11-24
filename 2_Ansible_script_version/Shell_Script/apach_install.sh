@@ -46,10 +46,10 @@ echo "[ Apache will be installed at '$(pwd)' ]" >> $apadir/apacheinstall_log
 
 # Create setupfiles download directory - It will be removed at final
 cd ..
-mkdir apachesetupfiles
+# mkdir apachesetupfiles
 
-# $apadir/apachesetupfiles
-cd ./apachesetupfiles
+# # $apadir/apachesetupfiles
+# cd ./apachesetupfiles
 
 ########################### wget ##################################
 # Check there is 'wget'
@@ -187,7 +187,7 @@ then
 fi
 
 ######################### pcre compile ############################
-# $apadir/apachesetupfiles/$pcrever
+# $apadir/$pcrever
 cd $pcrever
 
 # pcre configure
@@ -211,7 +211,7 @@ then
 fi
 
 ###################### mv apr, apr-util #########################
-# $apadir/apachesetupfiles/
+# $apadir/
 cd ..
 
 mv ./$aprver ./$apaver/srclib/apr
@@ -226,7 +226,7 @@ then
 fi
 
 ##################### apache compile #############################
-# $apadir/apachesetupfiles/$apaver
+# $apadir/$apaver
 cd $apaver
 
 # apache configure

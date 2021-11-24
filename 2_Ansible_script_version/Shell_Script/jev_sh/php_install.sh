@@ -55,10 +55,12 @@ wget -P . https://www.php.net/distributions/php-${phpver}.tar.gz
 # if there is error, ask again until user input correctly
 if [ $? -ne 0 ]
 then
+    echo "=======================================================" >> $phpdir/phpinstall_log
     echo "php version is not vaild, check version or file download url" >> $phpdir/phpinstall_log
     exit 0
 fi
 
+echo "=======================================================" >> $phpdir/phpinstall_log
 echo "php ${phpver} version download" >> $phpdir/phpinstall_log
 
 ########################### tar php download file #########################
@@ -68,6 +70,11 @@ tar xfz $phpver
 # set variable to untar directory name
 phpver=$(ls | grep php.*[^zg]$)
 
+############################ edit perl directory ########################
+
+sed -i "s/bin\/perl -w/usr\/bin\/perl/g" $apadir/bin/apxs
+
+
 ############################# configure php ##########################
 cd $phpver
 
@@ -75,21 +82,29 @@ apadir=$3
 
 if [ -z $apadir ]
 then
-    apadir=/usr/local/src
+    apadir=/usr/local/src/apache
 fi
 
-./configure --prefix=$phpdir/php --with-apxs=$apadir/bin/apxs --with-mysql --with-mysqli --with-zlib --with-jpeg --with-png --with-openssl --with-libxml --with-iconv --with-gd --enable-curl --enable-sockets --disable-fileinfo --disable-debug
+./configure --prefix=$phpdir/php --with-apxs2=$apadir/bin/apxs --with-mysqli=mysqlnd --with-imap-ssl --with-iconv --with-openssl --with-mysql-sock=mysqlnd --enable-mysqlnd --disable-fileinfo
 
+echo "=======================================================" >> $phpdir/phpinstall_log
 echo "Configure finished" >> $phpdir/phpinstall_log
-echo "Configure option : --prefix=$phpdir/php --with-apxs=$apadir/bin/apxs --with-mysql --with-mysqli" >> $phpdir/phpinstall_log
-echo "--with-zlib --with-jpeg --with-png --with-openssl --with-libxml --with-iconv --with-gd --enable-curl" >> $phpdir/phpinstall_log
-echo "--enable-sockets --disable-fileinfo --disable-debug" >> $phpdir/phpinstall_log
+echo "Configure option : --prefix=$phpdir/php --with-apxs2=$apadir/bin/apxs --with-mysqli=mysqlnd" >> $phpdir/phpinstall_log
+echo "--with-imap-ssl --with-iconv --with-openssl --with-mysql-sock=mysqlnd --enable-mysqlnd --disable-fileinfo" >> $phpdir/phpinstall_log
 
 ################################# make & make install ##################################
 make
 
+echo "=======================================================" >> $phpdir/phpinstall_log
 echo "Make finished" >> $phpdir/phpinstall_log
 
 make install
 
+echo "=======================================================" >> $phpdir/phpinstall_log
 echo "Make install finished" >> $phpdir/phpinstall_log
+
+############################### finish #######################################
+echo "=======================================================" >> $phpdir/phpinstall_log
+echo "If you want to activate php module, edit $apadir/conf/httpd.conf" >> $phpdir/phpinstall_log
+echo "Add 'AddType application/x-httpd-php .php .html' in mime_module" >> $phpdir/phpinstall_log
+echo "And restart apache using '$apadir/bin/apachectl stop', 'start'" >> $phpdir/phpinstall_log
