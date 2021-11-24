@@ -10,6 +10,10 @@ then
     tomcatver=""
 fi
 
+################### Initialize install log file ################
+host=$(hostname)
+echo "========================== Install tomcat ==========================" > /tmp/${host}_tomcatinstall_log
+
 ######################### directory setting ########################
 tomcatdir=$1
 
@@ -26,8 +30,8 @@ cd $tomcatdir
 # if not, install wget by yum
 if [ -z "$(yum list installed | grep wget)" ]
 then
-    echo "=======================================================" >> $tomcatdir/tomcatinstall_log
-    echo "[ There is no wget, now install ]" >> $tomcatdir/tomcatinstall_log
+    echo "=======================================================" >> /tmp/${host}_tomcatinstall_log
+    echo "[ There is no wget, now install ]" >> /tmp/${host}_tomcatinstall_log
     yum -y install wget
 fi
 
@@ -36,8 +40,8 @@ fi
 # if not, install java-openjdk by yum
 if [ -z "$(yum list installed | grep java-1.8.0-openjdk)" ]
 then
-    echo "=======================================================" >> $tomcatdir/tomcatinstall_log
-    echo "[ There is no java-1.8.0-openjdk, now install ]" >> $tomcatdir/tomcatinstall_log
+    echo "=======================================================" >> /tmp/${host}_tomcatinstall_log
+    echo "[ There is no java-1.8.0-openjdk, now install ]" >> /tmp/${host}_tomcatinstall_log
     yum -y install java-1.8.0-openjdk
 fi
 
@@ -55,11 +59,11 @@ wget -P . https://archive.apache.org/dist/tomcat/tomcat-8/v${tomcatver}/bin/apac
 # if there is error, ask again until user input correctly
 if [ $? -ne 0 ]
 then
-    echo "Tomcat version is not vaild, check version or file download url" >> $tomcatdir/tomcatinstall_log
+    echo "Tomcat version is not vaild, check version or file download url" >> /tmp/${host}_tomcatinstall_log
     exit 0
 fi
 
-echo "Tomcat ${tomcatver} version download" >> $tomcatdir/tomcatinstall_log
+echo "Tomcat ${tomcatver} version download" >> /tmp/${host}_tomcatinstall_log
 
 ########################### tar tomcat download file #########################
 tomcatver=$(ls | grep tomcat.*z$)
@@ -71,6 +75,6 @@ tomcatver=$(ls | grep tomcat.*[^zg]$)
 ln -s $tomcatver ./tomcat
 
 ################### finish ######################
-echo "=======================================================" >> $tomcatdir/tomcatinstall_log
-echo "Tomcat install process is done !" >> $tomcatdir/tomcatinstall_log
-echo "Run Tomcat by '$tomcatdir/tomcat/bin/catalina.sh start' command !" >> $tomcatdir/tomcatinstall_log
+echo "=======================================================" >> /tmp/${host}_tomcatinstall_log
+echo "Tomcat install process is done !" >> /tmp/${host}_tomcatinstall_log
+echo "Run Tomcat by '$tomcatdir/tomcat/bin/catalina.sh start' command !" >> /tmp/${host}_tomcatinstall_log

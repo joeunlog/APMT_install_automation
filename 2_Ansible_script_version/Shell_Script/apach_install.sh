@@ -7,6 +7,7 @@
 # 4	aprutilver=1.6.1
 # 5	pcrever=8.44
 
+# If there is no variable, set default
 if [ $# = 0 ]
 then
     apadir=""
@@ -15,6 +16,10 @@ then
     aprutilver=""
     pcrever=""
 fi
+
+################### Initialize install log file ################
+host=$(hostname)
+echo "========================== $host Install apache ==========================" > /tmp/${host}_apacheinstall_log
 
 ######################### directory setting ########################
 apadir=$1
@@ -26,14 +31,6 @@ fi
 
 mkdir -p $apadir
 
-# check input directory is valid
-# if not valid, ask again until user input correctly
-# if [ ! -d $apadir ]
-# then
-#     echo "Apache install directory is not valid" >> $apadir/apacheinstall_log
-#     exit 0
-# fi
-
 # Create apache directory
 cd $apadir
 mkdir ./apache
@@ -42,9 +39,10 @@ mkdir ./apache
 cd ./apache
 
 # print apache directory
-echo "[ Apache will be installed at '$(pwd)' ]" >> $apadir/apacheinstall_log
+echo "[ Apache will be installed at '$(pwd)' ]" >> /tmp/${host}_apacheinstall_log
 
-# Create setupfiles download directory - It will be removed at final
+# # Create setupfiles download directory - It will be removed at final
+# $apadir
 cd ..
 # mkdir apachesetupfiles
 
@@ -56,8 +54,8 @@ cd ..
 # if not, install wget by yum
 if [ -z "$(yum list installed | grep wget)" ]
 then
-    echo "=======================================================" >> $apadir/apacheinstall_log
-    echo "[ There is no wget, now install ]" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "[ There is no wget, now install ]" >> /tmp/${host}_apacheinstall_log
     yum -y install wget
 fi
 
@@ -72,20 +70,21 @@ fi
 # Try download apache setup file
 wget -P . http://archive.apache.org/dist/httpd/httpd-${apaver}.tar.gz
 
-# if there is error, ask again until user input correctly
+# if there is error, end process
 if [ $? -ne 0 ]
 then
-    echo "Apache version is not vaild, check version or file download url" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "Apache version is not vaild, check version or file download url" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
-echo "Apache ${apaver} version download" >> $apadir/apacheinstall_log
+echo "Apache ${apaver} version download" >> /tmp/${host}_apacheinstall_log
 
-apaver=$(ls | grep httpd)
+apaver=$(ls | grep httpd.*z$)
 tar xfz $apaver
 
 # set variable to untar directory name
-apaver=$(ls | grep httpd.*[^z]$)
+apaver=$(ls | grep httpd.*[^zg]$)
 
 #################### download apr setup file ####################
 aprver=$3
@@ -98,14 +97,15 @@ fi
 # Try download apr setup file
 wget -P . https://archive.apache.org/dist/apr/apr-${aprver}.tar.gz
 
-# if there is error, ask again until user input correctly
+# if there is error, end process
 if [ $? -ne 0 ]
 then
-    echo "apr version is not valid, check version or file download url" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "apr version is not valid, check version or file download url" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
-echo "Apr ${aprver} version download" >> $apadir/apacheinstall_log
+echo "Apr ${aprver} version download" >> /tmp/${host}_apacheinstall_log
 
 aprver=$(ls | grep apr-[0-9])
 tar xfz $aprver
@@ -124,14 +124,15 @@ fi
 # Try download apr-util setup file
 wget -P . https://archive.apache.org/dist/apr/apr-util-${aprutilver}.tar.gz
 
-# if there is error, ask again until user input correctly
+# if there is error, end process
 if [ $? -ne 0 ]
 then
-    echo "apr-util version is not valid, check version of file download url" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "apr-util version is not valid, check version of file download url" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
-echo "Apr-util ${aprutilver} version download" >> $apadir/apacheinstall_log
+echo "Apr-util ${aprutilver} version download" >> /tmp/${host}_apacheinstall_log
 
 aprutilver=$(ls | grep apr-util)
 tar xfz $aprutilver
@@ -150,14 +151,15 @@ fi
 # Try download pcre setup file
 wget -P . https://sourceforge.net/projects/pcre/files/pcre/${pcrever}/pcre-${pcrever}.tar.gz --no-check-certificate
 
-# if there is error, ask again until user input correctly
+# if there is error, end process
 if [ $? -ne 0 ]
 then
-    echo "pcre version is not valid, check version or file download url" < $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "pcre version is not valid, check version or file download url" < /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
-echo "Pcre ${pcrever} version download" >> $apadir/apacheinstall_log
+echo "Pcre ${pcrever} version download" >> /tmp/${host}_apacheinstall_log
 
 pcrever=$(ls | grep pcre)
 tar xfz $pcrever
@@ -171,8 +173,8 @@ pcrever=$(ls | grep pcre.*[^z]$)
 yum list installed | grep ^gcc.x86_64
 if [ $? -ne 0 ]
 then
-    echo "=======================================================" >> $apadir/apacheinstall_log
-    echo "[ There is no gcc, now install ]" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "[ There is no gcc, now install ]" >> /tmp/${host}_apacheinstall_log
     yum install -y gcc
 fi
 
@@ -181,8 +183,8 @@ fi
 yum list installed | grep ^gcc-c++.x86_64
 if [ $? -ne 0 ]
 then
-    echo "=======================================================" >> $apadir/apacheinstall_log
-    echo "[ There is no gcc-c++, now install ]" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "[ There is no gcc-c++, now install ]" >> /tmp/${host}_apacheinstall_log
     yum install -y gcc-c++
 fi
 
@@ -196,7 +198,7 @@ cd $pcrever
 # configure check
 if [ $? -ne 0 ]
 then
-    echo "pcre configure fail : Check script" >> $apadir/apacheinstall_log
+    echo "pcre configure fail : Check script" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
@@ -206,7 +208,7 @@ make && make install
 # make install check
 if [ $? -ne 0 ]
 then
-    echo "\pcre make && make install fail : Check script" >> $apadir/apacheinstall_log
+    echo "\pcre make && make install fail : Check script" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
@@ -220,8 +222,8 @@ mv ./$aprutilver ./$apaver/srclib/apr-util
 ############ expat for apache compile - yum install ##############
 if [ -z "$(yum list installed | grep expat-devel)" ]
 then
-    echo "=======================================================" >> $apadir/apacheinstall_log
-    echo "[ There is no expat-devel, now install ]" >> $apadir/apacheinstall_log
+    echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+    echo "[ There is no expat-devel, now install ]" >> /tmp/${host}_apacheinstall_log
     yum -y install expat-devel
 fi
 
@@ -235,7 +237,7 @@ cd $apaver
 # configure check
 if [ $? -ne 0 ]
 then
-    echo "apache configure fail : Check script" >> $apadir/apacheinstall_log
+    echo "apache configure fail : Check script" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
@@ -245,18 +247,18 @@ make && make install
 # make install check
 if [ $? -ne 0 ]
 then
-    echo "apache make && make install fail : Check script" >> $apadir/apacheinstall_log
+    echo "apache make && make install fail : Check script" >> /tmp/${host}_apacheinstall_log
     exit 0
 fi
 
 ################### edit httpd.conf - ServerName #################
 sed -i "/ServerName www/a ServerName localhost:80" $apadir/apache/conf/httpd.conf
 
-echo "=======================================================" >> $apadir/apacheinstall_log
-echo "ServerName is 'localhost:80'" >> $apadir/apacheinstall_log
-echo "If you want to change, edit '$apadir/apache/conf/httpd.conf'" >> $apadir/apacheinstall_log
+echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+echo "ServerName is 'localhost:80'" >> /tmp/${host}_apacheinstall_log
+echo "If you want to change, edit '$apadir/apache/conf/httpd.conf'" >> /tmp/${host}_apacheinstall_log
 
 ################### finish ######################
-echo "=======================================================" >> $apadir/apacheinstall_log
-echo "Apache install process is done !" >> $apadir/apacheinstall_log
-echo "Run Apache by '$apadir/apache/bin/apachectl start' command !" >> $apadir/apacheinstall_log
+echo "=======================================================" >> /tmp/${host}_apacheinstall_log
+echo "Apache install process is done !" >> /tmp/${host}_apacheinstall_log
+echo "Run Apache by '$apadir/apache/bin/apachectl start' command !" >> /tmp/${host}_apacheinstall_log
