@@ -41,6 +41,15 @@ ansible-playbook ec2_create.yaml -i hosts
 </br>
 
 ---
+# Do not ask ssh connection
+'/etc/ssh/ssh_config'
+```
+Host * # 이 부분에 아래 줄 추가
+StrictHostKeyChecking no
+```
+</br>
+
+---
 # Install httpd (apache) to web server
 `httpd_install.yaml`
 ```sh

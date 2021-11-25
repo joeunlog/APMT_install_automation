@@ -14,12 +14,12 @@
         dest: /tmp
         mode: 0777
       with_items:
-        - apache_install.sh
+        - php_install.sh
 
     - name: Execute shell script
-      command: sh /tmp/apache_install.sh "{{ apache_directory }}" "{{ apache_version }}" "{{ apr_version }}" "{{ aprutil_version }}" "{{ pcre_version }}"
+      command: sh /tmp/php_install.sh "{{ php_directory }}" "{{ php_version }}" "{{ php_apache_directory }}"
 
     - name: Fetch install log file
       fetch:
-        src: /tmp/{{ inventory_hostname }}_apacheinstall_log
+        src: /tmp/{{ inventory_hostname }}_phpinstall_log
         dest: /usr/local/eunvit

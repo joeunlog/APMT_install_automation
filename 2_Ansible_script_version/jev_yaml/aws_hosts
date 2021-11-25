@@ -2,7 +2,7 @@
 localhost ansible_connection=local
 
 [webserver:vars]
-ansible_ssh_private_key_file=/usr/local/apmtauto/keypair-auto-dev-pri.pem
+ansible_ssh_private_key_file=/usr/local/eunvit/keypair-auto-dev-pri.pem
 apache_directory=/usr/local/src
 apache_version=2.4.46
 apr_version=1.6.5
@@ -17,7 +17,7 @@ web01 ansible_host=10.50.20.15
 web02 ansible_host=10.50.20.150
 
 [wasserver:vars]
-ansible_ssh_private_key_file=/usr/local/apmtauto/keypair-auto-dev-pri.pem
+ansible_ssh_private_key_file=/usr/local/eunvit/keypair-auto-dev-pri.pem
 tomcat_directory=/usr/local/src
 tomcat_version=8.5.66
 
@@ -26,7 +26,7 @@ was01 ansible_host=10.50.30.15
 was02 ansible_host=10.50.30.150
 
 [dbserver:vars]
-ansible_ssh_private_key_file=/usr/local/apmtauto/keypair-auto-dev-pri.pem
+ansible_ssh_private_key_file=/usr/local/eunvit/keypair-auto-dev-pri.pem
 mysql_directory=/usr/local/src
 mysql_version=5.7.31
 

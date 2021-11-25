@@ -1,6 +1,6 @@
 ---
-- name: Install apache to webserver
-  hosts: webserver
+- name: Install apache to dbserver
+  hosts: dbserver
   remote_user: centos
   become: yes
   tasks:
@@ -14,12 +14,12 @@
         dest: /tmp
         mode: 0777
       with_items:
-        - apache_install.sh
+        - mysql_install.sh
 
     - name: Execute shell script
-      command: sh /tmp/apache_install.sh "{{ apache_directory }}" "{{ apache_version }}" "{{ apr_version }}" "{{ aprutil_version }}" "{{ pcre_version }}"
+      command: sh /tmp/mysql_install.sh "{{ mysql_directory }}" "{{ mysql_version }}"
 
     - name: Fetch install log file
       fetch:
-        src: /tmp/{{ inventory_hostname }}_apacheinstall_log
+        src: /tmp/{{ inventory_hostname }}_mysqlinstall_log
         dest: /usr/local/eunvit
