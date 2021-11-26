@@ -18,4 +18,4 @@
         wait: yes
         group: "sg_jev_prd_ase1_pri_web"
         vpc_subnet_id: "subnet-06eadca353a7458d2"
-      register: ec2
+      register: ec2 
