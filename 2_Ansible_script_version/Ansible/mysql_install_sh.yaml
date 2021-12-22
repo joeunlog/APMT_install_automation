@@ -1,0 +1,25 @@
+---
+- name: Install apache to dbserver
+  hosts: dbserver
+  remote_user: centos
+  become: yes
+  tasks:
+    - name: Set hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Copy shell script
+      copy:
+        src: "{{ item }}"
+        dest: /tmp
+        mode: 0777
+      with_items:
+        - mysql_install.sh
+
+    - name: Execute shell script
+      command: sh /tmp/mysql_install.sh "{{ mysql_directory }}" "{{ mysql_version }}"
+
+    - name: Fetch install log file
+      fetch:
+        src: /tmp/{{ inventory_hostname }}_mysqlinstall_log
+        dest: /usr/local/eunvit

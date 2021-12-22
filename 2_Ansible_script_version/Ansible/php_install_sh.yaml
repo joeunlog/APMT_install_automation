@@ -1,0 +1,25 @@
+---
+- name: Install apache to webserver
+  hosts: webserver
+  remote_user: centos
+  become: yes
+  tasks:
+    - name: Set hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Copy shell script
+      copy:
+        src: "{{ item }}"
+        dest: /tmp
+        mode: 0777
+      with_items:
+        - php_install.sh
+
+    - name: Execute shell script
+      command: sh /tmp/php_install.sh "{{ php_directory }}" "{{ php_version }}" "{{ php_apache_directory }}"
+
+    - name: Fetch install log file
+      fetch:
+        src: /tmp/{{ inventory_hostname }}_phpinstall_log
+        dest: /usr/local/eunvit
