@@ -39,7 +39,7 @@ export AWS_SECRET_ACCESS_KEY=''
 ansible-playbook ec2_create.yaml -i hosts
 ```
 </br>
-
+  
 ---
 # Do not ask ssh connection
 '/etc/ssh/ssh_config'
