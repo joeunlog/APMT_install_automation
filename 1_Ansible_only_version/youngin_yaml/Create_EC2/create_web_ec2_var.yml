@@ -1,16 +1,19 @@
 ---
-- hosts: localhost
+- name: Create Web instance
+  hosts: localhost
   connection: local
   gather_facts: no
   vars:
     region: ap-southeast-1
-    key: keypair-auto-dev-pub
+    key: keypair-auto-dev-pri
     instance_type: t2.micro
-    image: ami-06e83aceba2cb0907
+    image: ami-07f65177cb990d65b
     security_group: sg_auto_dev_ase1_pri_web
     vpc_subnet_id: subnet-0ac15e7d84120fb5f
     device_name: /dev/sda1
     volume_type: gp2
+    volume_name: volume-auto-dev-ase1-pri-web01G
+
   tasks:
     - name: web instance provisioning
       ec2:
@@ -21,20 +24,19 @@
         wait: yes
         group: "{{ security_group }}"
         vpc_subnet_id: "{{ vpc_subnet_id }}"
-        private_ip: "10.50.20.15"
+        private_ip: "10.50.20.20"
         instance_tags:
-          Name: ec2-auto-dev-ase1-pri-web01
+          Name: ec2-auto-dev-ase1-pri-web01G
           Creater: Ansible
           Date: 2021.11.25
           Owner: youngin
-        termination_protection: yes   
+        termination_protection: yes
         volumes:
-          volume_tags:
-            Name: volume-auto-dev-ase1-pri-web01
           - volume_size: 30
             device_name: "{{ device_name }}"
             volume_type: "{{ volume_type }}"
-        tags:
-          Name: volume-auto-dev-an2-web01
-      register: ec2 
-      
+            delete_on_termination: true
+        Tags:
+          - key: Name
+            value: "{{ volume_name }}"
+      register: ec2
