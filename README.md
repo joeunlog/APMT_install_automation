@@ -23,7 +23,7 @@ Github repository
   3.2 MySQL 설치 자동화			# 권영인	~ 11/12  
   3.3 php 설치 자동화			# 김연수	~ 11/12  
   3.4 manual 작성				# All	~ 11/12  
-4. Script version
+4. Script version  
   4.1 Shell script  
     4.1.1 Apache				# 조은빛	~ 11/26  
     4.1.2 php				# 조은빛	~ 11/26  

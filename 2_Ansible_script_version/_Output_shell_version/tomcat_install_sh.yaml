@@ -1,0 +1,25 @@
+---
+- name: Install apache to wasserver
+  hosts: wasserver
+  remote_user: centos
+  become: yes
+  tasks:
+    - name: Set hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Copy shell script
+      copy:
+        src: "{{ item }}"
+        dest: /tmp
+        mode: 0777
+      with_items:
+        - tomcat_install.sh
+
+    - name: Execute shell script
+      command: sh /tmp/tomcat_install.sh "{{ tomcat_directory }}" "{{ tomcat_version }}"
+
+    - name: Fetch install log file
+      fetch:
+        src: /tmp/{{ inventory_hostname }}_tomcatinstall_log
+        dest: /usr/local/apmt_install
