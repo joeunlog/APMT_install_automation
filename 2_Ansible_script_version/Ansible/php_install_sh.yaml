@@ -22,4 +22,4 @@
     - name: Fetch install log file
       fetch:
         src: /tmp/{{ inventory_hostname }}_phpinstall_log
-        dest: /usr/local/eunvit
+        dest: /usr/local/apmt_install
