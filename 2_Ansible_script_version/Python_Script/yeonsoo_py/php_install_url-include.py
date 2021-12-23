@@ -6,7 +6,7 @@ import sys #ansible에서 인자값 받아오기 위해 필요
 #ansible-playbook 실행시 url을 입력하면 실행
 if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
     user_url = sys.argv[1]
-    php_dir = user_url[user_url.find('php-') : (user_url.find('.tar') -1)]
+    php_dir = user_url[user_url.find('php-') : user_url.find('.tar')]
     php_file = user_url[user_url.find('php-') : ]
     subprocess.call('yum -y install wget libxml2-devel openssl-devel libjpeg-devel libpng-devel vim', shell=True)
     subprocess.call('wget {}'.format(user_url), shell=True)
