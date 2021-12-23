@@ -6,7 +6,7 @@
 - bastion server에 이 디렉토리의 파일과 각 서버 접속용 keypair가 있어야 함  
 </br>
 
-<a href="https://docs.google.com/document/d/1cALnIeYKEl1dkyxfkr-2koaVrzvCsK2A/edit?usp=sharing&ouid=112035323533615079300&rtpof=true&sd=true">정식 매뉴얼 링크</a>
+정식 매뉴얼은 구글 드라이브에
 
 </br>
 
