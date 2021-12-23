@@ -1,14 +1,18 @@
+# mysql 설치용 py파일 배포 및 mysql 설치용 yaml
+# 명령어
+# ansible-playbook {{yaml파일명}} -i {{참조할 호스트 파일명}} --extra-vars '{"version" : 버전 or url"}''
+
 ---
-- name: install php via Python Script
-  hosts: DBserver
+- name: install mysql via Python Script 
+  hosts: dbserver #ansible 실행 시 참조하기위한 hosts파일에 입력한 호스트
   remote_user: centos
   become: yes
 
   tasks:
   - name: copy pyhton script
     copy:
-      src: /root/mysql_install.py
-      dest: /usr/local/src/mysql_install.py
+      src: /root/mysql_install.py #해당 위치에 있는 .py파일을
+      dest: /usr/local/src/mysql_install.py #agent의 해당 위치로 복사
 
   - name: install php by python
-    shell: python /usr/local/src/mysql_install.py {{version}}
+    shell: python /usr/local/src/mysql_install.py {{version}} #입력한 버전숫자 또는 url에 맞는 mysql 설치

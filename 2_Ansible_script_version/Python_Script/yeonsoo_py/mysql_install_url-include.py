@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
-import subprocess
-import sys
+import subprocess #shell 명령어 사용 시 필요
+import sys #ansible에서 인자값 받아오기 위해 필요
 
+#ansible-playbook 실행시 url을 입력하면 실행
 if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
     user_url = sys.argv[1]
-    mysql_dir = user_url[user_url.find('mysql-') : (user_url.find('.tar') -1)]
+    mysql_dir = user_url[user_url.find('mysql-') : user_url.find('-el7')]
     mysql_file = user_url[user_url.find('mysql-') : ]
     subprocess.call('yum install -y cmake ncurses ncurses-devel ncurses-libs ncurses-static openssl openssl-devel bison readline gcc gcc-c++ make cmake glibc automake numactl numactl-devel libaio libaio-devel perl perl-Data-Dumper wget vim', shell=True)
     subprocess.call('wget {}'.format(user_url), shell=True)
@@ -14,6 +15,7 @@ if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
     subprocess.call('make', shell=True)
     subprocess.call('make install', shell=True) 
 
+#url이 아니라 버전만 입력했을 시 실행
 else:
     mysql_version = sys.argv[1]
     mysql_dir = 'mysql-{}-el7-x86_64'.format(mysql_version)
