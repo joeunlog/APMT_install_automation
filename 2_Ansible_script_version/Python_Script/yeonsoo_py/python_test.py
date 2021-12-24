@@ -1,7 +1,9 @@
-url = 'https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.24-el7-x86_64.tar.gz'
+version = input('put version : ')
+if 'https' or 'www' or 'tar.gz' in version:
+    user_url = version
+    print(user_url)
 
-print(url[url.find('mysql-') : url.find('-el7')])
-
-
-url2 = 'https://www.php.net/distributions/php-7.7.30.tar.gz'
-print(url2[url2.find('php-') : url2.find('.tar')])
+if len(version) < 7:
+    php_version = version
+    url_php = 'https://www.php.net/distributions/php-{}.tar.gz'.format(php_version)
+    print(url_php)

@@ -17,7 +17,7 @@ if 'https' or 'www' or 'tar.gz' in sys.argv[1]:
     subprocess.call('make install', shell=True) 
 
 #url이 아니라 버전만 입력했을 시 실행
-elif len(sys.argv[1]) < 7:
+if len(sys.argv[1]) < 7:
     mysql_version = sys.argv[1]
     mysql_dir = 'mysql-{}'.format(mysql_version)
     mysql_url = 'https://downloads.mysql.com/archives/get/p/23/file/mysql-{}.tar.gz'.format(mysql_version)
